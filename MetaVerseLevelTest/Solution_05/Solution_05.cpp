@@ -3,44 +3,58 @@
 
 using namespace std;
 
-// 
-void LottoGenerator(const int maxNum, const int resultNums)
+//로또 번호 정하기
+// 1. [1, maxValue] 사이의 값으로 무작위 뽑느다. 뽑은 값을 N이라고 한다.
+// 2. 중복인지 확인한다.
+// 3. 2 - 중복이면? 1번을 다시 수행한다.
+// 2. 2. 중복이 아니면? 데이터를 저장한다.
+// 3. 1번부터 digitCount만큼 반복한다.
+
+void LottoGenerator(int*arr, const int maxNum, const int amount)
 {
 	srand(time(0));
-	int arr[100] = { 0 };
 
-	for (int i = 0; i < resultNums; i++)
+	for (int i = 0; i < maxNum; i++)
 	{
-		int ran1 = rand() % maxNum;
+		int ran = rand() % maxNum;
 
-		if (arr[ran1] == 0)
+		if (arr[ran] == 0)
 		{
-			arr[ran1] += 1;
+			arr[ran] += 1;
 		}
-
 		else
 		{
-			// 랜덤 주사위를 한번 더 돌린다.
-			while (arr[ran1] != 0)
+			while (arr[ran] != 0)
 			{
-				ran1 = rand() % maxNum;
+				ran = rand() % maxNum;
 			}
-			arr[ran1] += 1;
+			arr[ran] += 1;
 		}
-
-		cout << ran1 + 1 << endl;
+		cout << ran + 1 << endl;
 	}
+
+	for (int i = 0; i < maxNum; i++)
+	{
+		cout << arr[i] << " " << endl;
+	}
+
+	delete[] arr;
 }
 
 int main(void)
 {
-	int maxNumber = 0;
-	int resultNumber = 0;
+	int maxNum = 0;
+	int amount = 0;
 
-	cout << "로또번호 최댓값을 입력하시오_ "; cin >> maxNumber;
-	cout << "생성숫자의 갯수를 입력하시오_ "; cin >> resultNumber;
+	cout << "로또번호 최댓값을 입력하시오_ "; cin >> maxNum;
+	cout << "생성숫자의 갯수를 입력하시오_ "; cin >> amount;
 
-	LottoGenerator(maxNumber, resultNumber);
+	int* arr = new int[amount];
+	LottoGenerator(arr, maxNum, amount);
 
 	return 0;
 }
+
+
+
+// 출력 : 로또 번호 출력
